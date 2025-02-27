@@ -1,0 +1,6 @@
+shape,size,color,surface,thickness,target concept
+circular,large,light,smooth,thick ,maligant
+circular,large,light,irregular,thick ,maligant
+oval,large,dark,smooth,thin,benign
+oval,large,light,irregular,thick ,maligant
+circular,small,light,smooth,thick ,benign
