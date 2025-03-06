@@ -1,0 +1,33 @@
+import numpy as np
+import pandas as pd
+data = pd.read_csv('dataset2.csv')
+target = np.array(data.iloc[:, -1])  
+concepts = np.array(data.iloc[:, :-1])  
+specific_h = concepts[0].copy()  
+generic_h = [["?" for _ in range(len(specific_h))] for _ in range(len(specific_h))]  
+def learn(concepts, target):
+    count = 0
+    for i, concept in enumerate(concepts):
+        if target[i] == "maligant":
+            for x in range(len(specific_h)):
+                if concept[x] != specific_h[x]:
+                    specific_h[x] = "?"  
+                    generic_h[x][x] = "?"
+        elif target[i] == "benign":
+            for x in range(len(specific_h)):
+                if concept[x] != specific_h[x]:
+                    generic_h[x][x] = specific_h[x]  
+                else:
+                    generic_h[x][x] = "?"  
+        count += 1
+
+    generic_h_cleaned = [entry for entry in generic_h if entry != ["?" for _ in range(len(specific_h))]]
+
+    return specific_h, generic_h_cleaned
+
+
+s_final, g_final = learn(concepts, target)
+print("Final Specific Hypothesis:")
+print(s_final)
+print("\nFinal Generic Hypothesis:")
+print(g_final)
